@@ -1,6 +1,8 @@
 # '''
 # Linked List hash table key/value pair
 # '''
+import math
+
 class LinkedPair:
     def __init__(self, key, value):
         self.key = key
@@ -23,7 +25,7 @@ class HashTable:
 
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
-        
+        print(hash(key))
         return hash(key)
 
 
@@ -61,9 +63,11 @@ class HashTable:
         if self.storage[index] == None:  #handling collisions tomorrow
             self.storage[index] = pair
         else:
-            print("Error: A pair already exists")
-
-
+            # x = self.storage[index] #possible handling of collisions??
+            # while x.next != None:
+            #     if x.next == None:
+            #         x.next = pair 
+            print("Error: A pair already exists at this index")
 
     def remove(self, key):
         '''
