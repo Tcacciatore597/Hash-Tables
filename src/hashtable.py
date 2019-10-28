@@ -23,6 +23,7 @@ class HashTable:
 
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
+        
         return hash(key)
 
 
@@ -32,7 +33,10 @@ class HashTable:
 
         OPTIONAL STRETCH: Research and implement DJB2
         '''
-        pass
+        hash_value = 5381
+        for char in key:
+            hash_value = ((hash_value << 5) + hash_value) + char
+        return hash_value
 
 
     def _hash_mod(self, key):
@@ -51,7 +55,13 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        pair = LinkedPair(key, value)
+
+        if self.storage[index] == None:  #handling collisions tomorrow
+            self.storage[index] = pair
+        else:
+            print("Error: A pair already exists")
 
 
 
@@ -63,7 +73,15 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        storage_key = self.storage[index].key
+
+        if storage_key == key:
+            del self.storage[index] # will delete the whole linked list at that index
+        else:
+            print("Key not found")
+            
+        
 
 
     def retrieve(self, key):
@@ -74,8 +92,13 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
-
+        
+        index = self._hash_mod(key)
+        x = self.storage[index]
+        if x.key == key:
+            return x.value
+        else:
+            return None
 
     def resize(self):
         '''
