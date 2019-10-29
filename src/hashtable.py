@@ -26,7 +26,6 @@ class HashTable:
 
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
-        print(hash(key))
         return hash(key)
 
 
@@ -141,14 +140,19 @@ class HashTable:
 
         #loop through each element in current storage
         for i in self.storage:
-            while i.next:
-                index = self._hash_mod(i.key)
-                if new_storage[index] == None:
-                    new_storage[index] = LinkedPair(i.key, i.value)
-                    return
-                new_storage[index].next = LinkedPair(i.key, i.value)
-        
+            if i != None:
+                current = i
+                while current:
+                    index = self._hash(current.key) % double_capacity
+                    if new_storage[index] == None:
+                        new_storage[index] = LinkedPair(current.key, current.value)
+                    else:
+                        new_pair = LinkedPair(current.key, current.value)
+                        new_pair.next = new_storage[index]
+                        new_storage[index] = new_pair
+                    current = current.next
         self.storage = new_storage
+        self.capacity = double_capacity
 
 if __name__ == "__main__":
     ht = HashTable(2)
